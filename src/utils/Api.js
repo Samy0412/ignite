@@ -9,15 +9,39 @@ const rawgAxios = axios.create({
   },
 });
 
-export const popularGames = async () => {
-  const today = moment().format("YYYY-MM-DD");
-  const nextYear = moment().add(1, "year").format("YYYY-MM-DD");
-  const lastYear = `${moment().subtract(1, "year").format("YYYY-MM-DD")}`;
+const today = moment().format("YYYY-MM-DD");
+const nextYear = moment().add(1, "year").format("YYYY-MM-DD");
+const lastYear = `${moment().subtract(1, "year").format("YYYY-MM-DD")}`;
 
+export const popularGames = async () => {
   const { data } = await rawgAxios.get("/games", {
     params: {
-      dates: `${lastYear},${nextYear}`,
+      dates: `${lastYear},${today}`,
       ordering: "-rating",
+      page_size: 10,
+    },
+  });
+
+  return data;
+};
+
+export const upcomingGames = async () => {
+  const { data } = await rawgAxios.get("/games", {
+    params: {
+      dates: `${today},${nextYear}`,
+      ordering: "-added",
+      page_size: 10,
+    },
+  });
+
+  return data;
+};
+
+export const newGames = async () => {
+  const { data } = await rawgAxios.get("/games", {
+    params: {
+      dates: `${lastYear},${today}`,
+      ordering: "-released",
       page_size: 10,
     },
   });
