@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 
+import { useParams } from "react-router-dom";
+
 import GameDetail from "../components/GameDetail";
 //redux
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +13,8 @@ import { motion } from "framer-motion";
 import Game from "../components/Game";
 
 function Home() {
+  //Get the id of the game in the params
+  let { id } = useParams();
   //Set the state
   const dispatch = useDispatch();
   useEffect(() => {
@@ -20,7 +24,7 @@ function Home() {
   const { popular, newGames, upcoming } = useSelector((state) => state.games);
   return (
     <GameList>
-      <GameDetail />
+      {id && <GameDetail />}
       <h2>Upcoming Games</h2>
       <Games>
         {upcoming.map((game) => (
