@@ -1,5 +1,7 @@
 import React from "react";
 
+import { smallImage } from "../utils/mediaResize";
+
 //Styling and animation
 import styled from "styled-components";
 import { motion } from "framer-motion";
@@ -43,7 +45,7 @@ function GameDetail() {
             </Stats>
             <Media>
               <img
-                src={details.background_image}
+                src={smallImage(details.background_image, 1280)}
                 alt={`${details.name} background`}
               />
             </Media>
@@ -52,7 +54,11 @@ function GameDetail() {
             </Description>
             <div className="gallery">
               {details.screenshots?.map((screenshot) => (
-                <img src={screenshot.image} alt="game" key={screenshot.id} />
+                <img
+                  src={smallImage(screenshot.image, 1280)}
+                  alt="game"
+                  key={screenshot.id}
+                />
               ))}
             </div>
           </Detail>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { smallImage } from "../utils/mediaResize";
 
 //Styling and animation
 import styled from "styled-components";
@@ -23,7 +24,7 @@ function Game({ name, released, image, screenshots, id }) {
       <Link to={`/games/${id}`}>
         <h3>{name}</h3>
         <p>{released}</p>
-        <img src={image} alt={name} />
+        <img src={smallImage(image, 640)} alt={name} />
       </Link>
     </StyledGame>
   );
