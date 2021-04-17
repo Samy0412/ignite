@@ -2,6 +2,8 @@ import React from "react";
 
 import { smallImage } from "../utils/mediaResize";
 
+import parse from "html-react-parser";
+
 //Styling and animation
 import styled from "styled-components";
 import { motion } from "framer-motion";
@@ -47,9 +49,28 @@ function GameDetail({ pathId }) {
         return ".././img/gamepad.svg";
     }
   };
+
+  //get rating stars
+  const getStars = (r) => {
+    const stars = [];
+    const rating = Math.floor(r);
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <img
+          alt="star"
+          key={i}
+          src={
+            i <= rating ? ".././img/star-full.png" : ".././img/star-empty.png"
+          }
+        ></img>
+      );
+    }
+    return stars;
+  };
   //getting the data
   const details = useSelector((state) => state.gameDetails.gameDetails);
   const isLoading = useSelector((state) => state.gameDetails.isLoading);
+
   return (
     <>
       {!isLoading && (
@@ -59,6 +80,7 @@ function GameDetail({ pathId }) {
               <div className="rating">
                 <h3>{details.name}</h3>
                 <p>Rating: {details.rating}</p>
+                <Stars>{getStars(details.rating)}</Stars>
               </div>
               <Info>
                 <h3>Platforms</h3>
@@ -70,7 +92,6 @@ function GameDetail({ pathId }) {
                       alt={data.platform.name}
                       title={data.platform.name}
                     />
-                    // <h3 key={data.platform.id}>{data.platform.name}</h3>
                   ))}
                 </Platforms>
               </Info>
@@ -81,10 +102,8 @@ function GameDetail({ pathId }) {
                 alt={`${details.name} background`}
               />
             </Media>
-            <Description>
-              <p>{details.description}</p>
-            </Description>
-            <div className="gallery">
+            <Description>{parse(details.description)}</Description>
+            <Gallery>
               {details.screenshots?.map((screenshot) => (
                 <img
                   src={smallImage(screenshot.image, 1280)}
@@ -92,7 +111,7 @@ function GameDetail({ pathId }) {
                   key={screenshot.id}
                 />
               ))}
-            </div>
+            </Gallery>
           </Detail>
         </CardShadow>
       )}
@@ -120,6 +139,7 @@ const CardShadow = styled(motion.div)`
 `;
 const Detail = styled(motion.div)`
   width: 80%;
+  margin: 1rem 0 1rem 0;
   border-radius: 1rem;
   padding: 2rem 5rem;
   background: white;
@@ -153,6 +173,21 @@ const Media = styled(motion.div)`
 
 const Description = styled(motion.div)`
   margin: 5rem 0rem;
+`;
+
+const Stars = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100px;
+  img {
+    margin-right: 3px;
+  }
+`;
+
+const Gallery = styled.div`
+  img {
+    margin-bottom: 2rem;
+  }
 `;
 
 export default GameDetail;
