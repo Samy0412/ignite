@@ -11,7 +11,7 @@ import { useHistory } from "react-router-dom";
 //Redux
 import { useSelector } from "react-redux";
 
-function GameDetail() {
+function GameDetail({ pathId }) {
   const history = useHistory();
   //Exit detail
   const exitDetailhandler = (e) => {
@@ -21,6 +21,32 @@ function GameDetail() {
       history.push("/");
     }
   };
+
+  //get platform images
+  const getPlatform = (platform) => {
+    switch (platform) {
+      case "PlayStation 4":
+        return ".././img/playstation.svg";
+      case "PlayStation 5":
+        return ".././img/playstation.svg";
+      case "Xbox One":
+        return ".././img/xbox.svg";
+      case "Xbox Series S/X":
+        return ".././img/xbox.svg";
+      case "Xbox S":
+        return ".././img/xbox.svg";
+      case "PC":
+        return ".././img/steam.svg";
+      case "Nintendo Switch":
+        return ".././img/nintendo.svg";
+      case "iOS":
+        return ".././img/apple.svg";
+      case "macOS":
+        return ".././img/apple.svg";
+      default:
+        return ".././img/gamepad.svg";
+    }
+  };
   //getting the data
   const details = useSelector((state) => state.gameDetails.gameDetails);
   const isLoading = useSelector((state) => state.gameDetails.isLoading);
@@ -28,7 +54,7 @@ function GameDetail() {
     <>
       {!isLoading && (
         <CardShadow className="shadow" onClick={exitDetailhandler}>
-          <Detail>
+          <Detail LayoutId={pathId}>
             <Stats>
               <div className="rating">
                 <h3>{details.name}</h3>
@@ -38,7 +64,13 @@ function GameDetail() {
                 <h3>Platforms</h3>
                 <Platforms>
                   {details.platforms?.map((data) => (
-                    <h3 key={data.platform.id}>{data.platform.name}</h3>
+                    <img
+                      key={data.platform.id}
+                      src={getPlatform(data.platform.name)}
+                      alt={data.platform.name}
+                      title={data.platform.name}
+                    />
+                    // <h3 key={data.platform.id}>{data.platform.name}</h3>
                   ))}
                 </Platforms>
               </Info>
@@ -93,6 +125,7 @@ const Detail = styled(motion.div)`
   background: white;
   position: absolute;
   left: 10%;
+  z-index: 10;
   img {
     width: 100%;
   }

@@ -13,6 +13,7 @@ import { loadDetail } from "../actions/detailAction";
 function Game({ name, released, image, screenshots, id }) {
   //loadDetails
   const dispatch = useDispatch();
+  const idString = id.toString();
 
   const loadDetailHandler = () => {
     document.body.style.overflow = "hidden";
@@ -20,7 +21,7 @@ function Game({ name, released, image, screenshots, id }) {
   };
 
   return (
-    <StyledGame onClick={loadDetailHandler}>
+    <StyledGame onClick={loadDetailHandler} LayoutId={idString}>
       <Link to={`/games/${id}`}>
         <h3>{name}</h3>
         <p>{released}</p>
