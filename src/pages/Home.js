@@ -11,6 +11,7 @@ import { loadGames } from "../actions/gamesActions";
 import styled from "styled-components";
 import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
 import Game from "../components/Game";
+import { fadeIn } from "../utils/animations";
 
 function Home() {
   //Get the id of the game in the params
@@ -25,7 +26,7 @@ function Home() {
     (state) => state.games
   );
   return (
-    <GameList>
+    <GameList variants={fadeIn} initial="hidden" animate="show">
       <AnimateSharedLayout type="crossfade">
         <AnimatePresence>{id && <GameDetail pathId={id} />}</AnimatePresence>
         {searched && searched.length > 0 && (
