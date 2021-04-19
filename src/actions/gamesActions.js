@@ -1,4 +1,9 @@
-import { popularGames, upcomingGames, newGames } from "../utils/Api.js";
+import {
+  popularGames,
+  upcomingGames,
+  newGames,
+  searchGames,
+} from "../utils/Api.js";
 
 //Action creator
 export const loadGames = () => async (dispatch) => {
@@ -12,6 +17,18 @@ export const loadGames = () => async (dispatch) => {
       popular: popularGamesData.results,
       upcoming: upcomingGamesData.results,
       newGames: newGamesData.results,
+    },
+  });
+};
+
+export const fetchSearch = (game_name) => async (dispatch) => {
+  //FETCH DATA
+  const searchGamesData = await searchGames(game_name);
+
+  dispatch({
+    type: "FETCH_SEARCHED",
+    payload: {
+      searched: searchGamesData.results,
     },
   });
 };

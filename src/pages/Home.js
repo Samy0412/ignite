@@ -21,11 +21,30 @@ function Home() {
     dispatch(loadGames());
   }, [dispatch]);
   //get back the state
-  const { popular, newGames, upcoming } = useSelector((state) => state.games);
+  const { popular, newGames, upcoming, searched } = useSelector(
+    (state) => state.games
+  );
   return (
     <GameList>
       <AnimateSharedLayout type="crossfade">
         <AnimatePresence>{id && <GameDetail pathId={id} />}</AnimatePresence>
+        {searched && searched.length > 0 && (
+          <Games>
+            {searched.map((game) => (
+              <Game
+                key={game.id}
+                name={game.name}
+                released={game.released}
+                id={game.id}
+                image={game.background_image}
+                screenshots={game.short_screenshots}
+              />
+            ))}
+          </Games>
+        )}
+        {searched && searched.length === 0 && (
+          <h3>Sorry, we didn't find any match!</h3>
+        )}
         <h2>Upcoming Games</h2>
         <Games>
           {upcoming.map((game) => (
@@ -69,7 +88,7 @@ function Home() {
 }
 
 const GameList = styled(motion.div)`
-  padding: 0rem 5rem;
+  padding: 0rem 5rem 5rem 5rem;
   h2 {
     padding: 5rem 0rem;
   }
@@ -79,7 +98,7 @@ const Games = styled(motion.div)`
   min-height: 80vh;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  grid-template-rows: repeat(auto-fit, minmax(300px, 450px));
+  grid-template-rows: 400px 400px 400px;
   grid-column-gap: 3rem;
   grid-row-gap: 5rem;
 `;

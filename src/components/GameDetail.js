@@ -2,8 +2,6 @@ import React from "react";
 
 import { smallImage } from "../utils/mediaResize";
 
-import parse from "html-react-parser";
-
 //Styling and animation
 import styled from "styled-components";
 import { motion } from "framer-motion";
@@ -102,7 +100,9 @@ function GameDetail({ pathId }) {
                 alt={`${details.name} background`}
               />
             </Media>
-            <Description>{parse(details.description)}</Description>
+            <Description>
+              <p>{details.description_raw}</p>
+            </Description>
             <Gallery>
               {details.screenshots?.map((screenshot) => (
                 <img

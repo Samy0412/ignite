@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 import { loadDetail } from "../actions/detailAction";
 
 function Game({ name, released, image, screenshots, id }) {
-  //loadDetails
+  //uploadDetails
   const dispatch = useDispatch();
   const idString = id.toString();
 
