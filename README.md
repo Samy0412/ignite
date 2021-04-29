@@ -1,10 +1,10 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Ignite is a video games listing app pulling data from RAWG Video Games Database API ( https://api.rawg.io/docs/) It uses react.JS and Redux for state management.
 
-## Available Scripts
+## SETUP
 
-In the project directory, you can run:
+
 
 ### `yarn start`
 
